@@ -60,7 +60,7 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
        choose the different type deconvolution:
        0: No deconvolution
        1: LandWeber deconxolution
-       2: Lucy-Richardson deconvolution
+       2: Richardson-Lucy deconvolution
 
     Returns
     -------
@@ -75,7 +75,7 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
 	>>> img_recon = sparse_deconv(im, [5,5])
     References
     ----------
-      [1] Weisong Zhao et  al. Sparse deconvolution improves
+      [1] Weisong Zhao et al. Sparse deconvolution improves
       the resolution of live-cell super-resolution 
       fluorescence microscopy, Nature Biotechnology (2021),
       https://doi.org/10.1038/s41587-021-01092-2

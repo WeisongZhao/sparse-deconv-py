@@ -46,7 +46,7 @@ def deblur_core(data, kernel, iteration, rule):
     otf = psf2otf(kernel_initial, data.shape)
 
     if rule == 2: 
-    #LW deconv
+    #LandWeber deconv
         t = 1
         gamma1 = 1
         for i in range(0,iteration):
@@ -66,7 +66,7 @@ def deblur_core(data, kernel, iteration, rule):
                 xk = yk
 
     elif rule == 1:
-    #RL deconv
+    #Richardson-Lucy deconv
 
         for iter in range(0, iteration):
 
