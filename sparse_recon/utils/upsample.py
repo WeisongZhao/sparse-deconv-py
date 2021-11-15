@@ -1,4 +1,3 @@
-# from sympy import *
 import  warnings
 import numpy as np
 
@@ -34,17 +33,13 @@ def spatial_upsample(SIMmovie,n=2):
 
 
 def fourier_upsample(imgstack, n = 2):
-    '''
-    ***************************************************************************
+    ''' 
     Fourier interpolation
-    ***************************************************************************
-    function imgfl = fourier_upsample( imgstack, n)
     -----------------------------------------------
-    Source code for background estimation
-    imgstack :  ndarray
-       Input image (can be N dimensional).
-     n :   int, optional
-          magnification times  {default: 2}
+    imgstack: ndarray
+        input image (can be N dimensional).
+     n: int, optional
+        magnification times  {default: 2}
     ------------------------------------------------
     Output:
       imgfl

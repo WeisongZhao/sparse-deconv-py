@@ -135,28 +135,3 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
         print('deconv time')
         print(end - start)
         return index * img_last
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
