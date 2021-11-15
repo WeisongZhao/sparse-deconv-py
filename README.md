@@ -1,13 +1,16 @@
-
+[![paper](https://img.shields.io/badge/paper-nat.%20biotech.-black.svg)](https://doi.org/10.1038/s41587-021-01092-2/)<br>
+[![Github commit](https://img.shields.io/github/last-commit/WeisongZhao/sparse-deconv-py)](https://github.com/WeisongZhao/sparse-deconv-py/)
+[![License](https://img.shields.io/github/license/WeisongZhao/sparse-deconv-py)](https://github.com/WeisongZhao/sparse-deconv-py/blob/master/LICENSE/)<br>
+[![Twitter](https://img.shields.io/twitter/follow/weisong_zhao?label=weisong)](https://twitter.com/weisong_zhao/status/1370308101690118146)
+[![GitHub watchers](https://img.shields.io/github/watchers/WeisongZhao/sparse-deconv-py?style=social)](https://github.com/WeisongZhao/Sparse-SIM/) 
+[![GitHub stars](https://img.shields.io/github/stars/WeisongZhao/sparse-deconv-py?style=social)](https://github.com/WeisongZhao/Sparse-SIM/) 
+[![GitHub forks](https://img.shields.io/github/forks/WeisongZhao/sparse-deconv-py?style=social)](https://github.com/WeisongZhao/Sparse-SIM/)
 
 <p>
 <h2 align="center">Sparse deconvolution<sub> Python v0.3.0</sub></h2>
 <!-- <h6 align="center"><sup>v1.0.3</sup></h6> -->
 <!-- <h4 align="center">This repository contains the updating version of Sparse deconvolution.</h4> -->
 </p>  
-
-
-
 
 
 Official **Python** implementation of the '**Sparse deconvolution**', and the `CPU (NumPy)` and `GPU (CuPy)` calculation backend will be automatically selected. 
@@ -40,10 +43,10 @@ plt.show()
 
 ## Depencency 
 
-- Python
-- NumPy
-- CuPy
-- PyWavelets
+- Python 3.7
+- NumPy 1.21.4
+- CuPy 9.6.0 (CUDA 11.5)
+- PyWavelets 1.1.1
 
 ## Version
 
