@@ -83,20 +83,20 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
     if not sigma:
         print("The PSF's sigma is not given, turning off the iterative deconv...")
         deconv_type = 0
-    im = np.array(im, dtype='float32')
-    im = im/(im.max())
+    im = np.array(im, dtype = 'float32')
+    im = im / (im.max())
     index = im.max()
-    if background== 2:
-        backgrounds=background_estimation(im/2)
+    if background == 2:
+        backgrounds = background_estimation(im / 2)
         im=im- backgrounds
-    elif background== 1:
-        backgrounds=background_estimation(im/2.5)
+    elif background == 1:
+        backgrounds = background_estimation(im / 2.5)
         im=im- backgrounds
     elif background== 4:
         medVal = np.mean(im)
-        im[im> medVal]= medVal
+        im[im> medVal] = medVal
         backgrounds = background_estimation(im)
-        im = im-backgrounds
+        im = im - backgrounds
     elif background == 5:
         medVal = np.mean(im)/2
         im[im > medVal] = medVal
@@ -107,24 +107,22 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
         im[im > medVal] = medVal
         backgrounds = background_estimation(im)
         im = im - backgrounds
-    elif background == 0:
-        im=im
+
     im = im / (im.max())
     # plt.imshow(im*255,cmap ='gray')
     # plt.show()
     im[im < 0] = 0
-    if up_sample == 0:
-        im = im
-    elif up_sample == 1:
+
+    if up_sample == 1:
         im = fourier_upsample(im)
-    elif up_sample== 2:
+    elif up_sample == 2:
         im = spatial_upsample(im)
     im = im / (im.max())
     start = time.clock()
     img_sparse = sparse_hessian(im, sparse_iter, fidelity, sparsity, tcontinuity)
     end = time.clock()
     print('sparse hessian time')
-    print(end-start)
+    print(end - start)
     img_sparse = img_sparse / (img_sparse.max())
     if deconv_type == 0:
         img_last = img_sparse
