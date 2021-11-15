@@ -30,13 +30,13 @@ It is a part of publication. For details, please refer to: "[Weisong Zhao et al.
 from sparse_recon.sparse_deconv import sparse_deconv
 
 im = io.imread('test.tif')
-plt.imshow(im,cmap ='gray')
+plt.imshow(im,cmap = 'gray')
 plt.show()
 
 pixelsize = 65 #(nm)
 resolution = 280 #(nm)
 
-img_recon = sparse_deconv(im, resolution/pixelsize)
+img_recon = sparse_deconv(im, resolution / pixelsize)
 plt.imshow(img_recon / img_recon.max() * 255,cmap = 'gray')
 plt.show()
 ```

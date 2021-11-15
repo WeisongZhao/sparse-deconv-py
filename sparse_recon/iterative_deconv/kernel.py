@@ -1,16 +1,11 @@
 # from sympy import *
 import numpy as np
 import math
-
-# def kernel(sigma):
-#     psf = Gauss(sigma)
-#     kernel = psf / sum(sum(psf))
-#     return kernel
 from numpy import log
 
 
 def Gauss(sigma):
-    sigma = np.array(sigma, dtype='float32')
+    sigma = np.array(sigma, dtype = 'float32')
     psfN = np.ceil(sigma / math.sqrt(8 * log(2)) * math.sqrt(-2 * log(0.0002))) + 1
     N = psfN * 2 + 1
     sigma = sigma / (2 * math.sqrt(2 * log(2)))
