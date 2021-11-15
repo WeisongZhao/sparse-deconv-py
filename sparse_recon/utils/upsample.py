@@ -1,6 +1,7 @@
 # from sympy import *
 import  warnings
 import numpy as np
+
 try:
     import cupy as cp
 except ImportError:
@@ -21,14 +22,14 @@ def spatial_upsample(SIMmovie,n=2):
         #ind_down_y1 =  np.arange(n, sy*n,n)
         #ind_down_x1 = np.arange(n, sx*n,n)
 
-        y=xp.zeros((sz*n, sx*n,sy*n))
+        y=xp.zeros((sz*n, sx*n,sy*n),dtype='float32')
         y = xp.array(y)
         y[0:sz*n:n,0:sx*n:n,0:sy*n:n] =SIMmovie
         y = xp.array(y)
         return y
     else:
         [sx, sy] = SIMmovie.shape
-        y=xp.array(zeros(sx*n,sy*n))
+        y=xp.zeros((sx*n,sy*n),dtype='float32')
         y[0:sx * n:n, 0:sy * n:n] = SIMmovie
         return y
 
@@ -96,7 +97,7 @@ def fInterp_2D(img, newsz):
     isgreater = newsz >= imgsz
     isgreater= isgreater.astype(int)
     isgreater=xp.array(isgreater)
-    incr = xp.zeros((2, 1))
+    incr = xp.zeros((2, 1),dtype='float32')
     for iDim in range(0,2):
         if isgreater[0][iDim]==1:
             incr[iDim] = 1

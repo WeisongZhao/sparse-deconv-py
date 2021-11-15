@@ -1,5 +1,7 @@
 import pywt
 import numpy as np
+from numpy import zeros
+
 
 def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
     ''' Background estimation
@@ -23,12 +25,12 @@ def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
         z=1
         if x < y:
             imgs = np.lib.pad(imgs, [max(x, y) - imgs.shape[0], max(x, y) - imgs.shape[1], 0], 'symmetric')
-        Background = np.zeros(imgs.shape[0], imgs.shape[1])
+        Background = np.zeros((imgs.shape[0], imgs.shape[1]),dtype='float32')
     else:
         [z, x,y] = imgs.shape
         if x < y:
             imgs = np.lib.pad(imgs, [max(x, y) - imgs.shape[0], max(x, y) - imgs.shape[1],0], 'symmetric')
-        Background =np.zeros((imgs.shape[0],imgs.shape[1],imgs.shape[2]))
+        Background =np.zeros((imgs.shape[0],imgs.shape[1],imgs.shape[2]),dtype='float32')
     for frames in range(0,z):
         if imgs.ndim < 3:
             initial = imgs
@@ -44,14 +46,15 @@ def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
             for i in k:
                 lt = list(i)  # 把元组类型全部变成列表类型
                 list_out.append(lt)
-            n = np.array(zeros(dlevel+2,2))
+
+            n = np.zeros((dlevel+2,2))
             for g in range(0,dlevel+1):
                 n[g,:]=np.array(m[g][1].shape)
             n[dlevel+1,:]=np.array(initial.shape)
             for kk in range(1,dlevel+1):
-                list_out[kk][0]=zeros(n[kk,1],n[kk,1])
-                list_out[kk][1] =zeros(n[kk,1], n[kk,1])
-                list_out[kk][2] = zeros(n[kk,1], n[kk,1])
+                list_out[kk][0]=zeros((int(n[kk,1]),int(n[kk,1])),dtype='float32')
+                list_out[kk][1] =zeros((int(n[kk,1]), int(n[kk,1])),dtype='float32')
+                list_out[kk][2] = zeros((int(n[kk,1]), int(n[kk,1])),dtype='float32')
             Biter = pywt.waverec2(list_out, wavename)
 
             if th > 0:
@@ -64,9 +67,9 @@ def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
                     lt = list(i)  # 把元组类型全部变成列表类型
                     list_out.append(lt)
                 for kk in range(1, dlevel + 1):
-                    list_out[kk][0] = zeros(n[kk, 1], n[kk, 1])
-                    list_out[kk][1] = zeros(n[kk, 1], n[kk, 1])
-                    list_out[kk][2] = zeros(n[kk, 1], n[kk, 1])
+                    list_out[kk][0] = zeros((int(n[kk, 1]),int( n[kk, 1])),dtype='float32')
+                    list_out[kk][1] = zeros((int(n[kk, 1]),int(n[kk, 1])),dtype='float32')
+                    list_out[kk][2] = zeros((int(n[kk, 1]), int(n[kk, 1])),dtype='float32')
                 Biter = pywt.waverec2(list_out, wavename)
 
         if imgs.ndim < 3:

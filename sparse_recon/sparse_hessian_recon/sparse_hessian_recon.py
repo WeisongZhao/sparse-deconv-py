@@ -43,7 +43,7 @@ def sparse_hessian(f, iteration_num = 100,fidelity = 150,  sparsity = 10,contiz 
     if f_flag == 2:
         contiz = 0
         flage = 1
-        f = xp.zeros((3,f.shape[0], f.shape[1]))
+        f = xp.zeros((3,f.shape[0], f.shape[1]),dtype='float32')
         f = xp.array(f)
         for i in range(0,3):
             f[i,:,:]=f1
@@ -51,7 +51,7 @@ def sparse_hessian(f, iteration_num = 100,fidelity = 150,  sparsity = 10,contiz 
     elif f_flag >2:
         if f1.shape[0]<3:
             contiz = 0
-            f = xp.zeros((3, f.shape[1], f.shape[2]))
+            f = xp.zeros((3, f.shape[1], f.shape[2]),dtype='float32')
             f[0:f1.shape[0],:,:]=f1
             for i in range(f1.shape[0], 3):
                 f[i, :, :] = f[1,:,:]

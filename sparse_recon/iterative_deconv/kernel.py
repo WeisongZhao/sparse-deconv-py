@@ -6,9 +6,11 @@ import math
 #     psf = Gauss(sigma)
 #     kernel = psf / sum(sum(psf))
 #     return kernel
+from numpy import log
+
 
 def Gauss(sigma):
-    sigma = np.array(sigma)
+    sigma = np.array(sigma, dtype='float32')
     psfN = np.ceil(sigma / math.sqrt(8 * log(2)) * math.sqrt(-2 * log(0.0002))) + 1
     N = psfN * 2 + 1
     sigma = sigma / (2 * math.sqrt(2 * log(2)))
@@ -18,7 +20,7 @@ def Gauss(sigma):
         N[1] = N[0]
         sigma[0: 1] = np.flip(sigma[0: 1])
     if dim == 1:
-        x = np.arange(-np.fix(N / 2), np.ceil(N / 2))
+        x = np.arange(-np.fix(N / 2), np.ceil(N / 2),dtype='float32')
         PSF = np.exp(-0.5 * (x * x) / (np.dot(sigma, sigma)))
         PSF = PSF / PSF.sum()
         center = N / 2 + 1
@@ -26,8 +28,8 @@ def Gauss(sigma):
     if dim == 2:
         m = N[0]
         n = N[1]
-        x = np.arange(-np.fix((n / 2)), np.ceil((n / 2)))
-        y = np.arange(-np.fix((m / 2)), np.ceil((m / 2)))
+        x = np.arange(-np.fix((n / 2)), np.ceil((n / 2)),dtype='float32')
+        y = np.arange(-np.fix((m / 2)), np.ceil((m / 2)),dtype='float32')
         X, Y = np.meshgrid(x, y)
         if len(sigma) == 1:
             PSF = np.exp(-X * X / (2 * np.dot(sigma, sigma)) - Y * Y / (2 * np.dot(sigma, sigma)))
@@ -53,9 +55,9 @@ def Gauss(sigma):
         m = N[0]
         n = N[1]
         k = N[2]
-        x = np.arange(-np.fix(n / 2), np.ceil(n / 2))
-        y = np.arange(-np.fix(m / 2), np.ceil(m / 2))
-        z = np.arange(-np.fix(k / 2), np.ceil(k / 2))
+        x = np.arange(-np.fix(n / 2), np.ceil(n / 2),dtype='float32')
+        y = np.arange(-np.fix(m / 2), np.ceil(m / 2),dtype='float32')
+        z = np.arange(-np.fix(k / 2), np.ceil(k / 2),dtype='float32')
         [X, Y, Z] = np.meshgrid(x, y, z)
         s1 = sigma[0]
         s2 = sigma[1]

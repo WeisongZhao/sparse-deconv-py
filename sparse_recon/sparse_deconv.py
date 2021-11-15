@@ -58,9 +58,9 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
         the iteration of deconvolution {example:7}
     deconv_type : int, optional
        choose the different type deconvolution:
-       0:No deconvolution
-       1:LandWeber deconxolution
-       2:Lucy-Richardson deconvolution
+       0: No deconvolution
+       1: LandWeber deconxolution
+       2: Lucy-Richardson deconvolution
 
     Returns
     -------
@@ -83,10 +83,9 @@ def sparse_deconv(im, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, t
     if not sigma:
         print("The PSF's sigma is not given, turning off the iterative deconv...")
         deconv_type = 0
-
+    im = np.array(im, dtype='float32')
     im = im/(im.max())
     index = im.max()
-
     if background== 2:
         backgrounds=background_estimation(im/2)
         im=im- backgrounds

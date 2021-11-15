@@ -18,9 +18,9 @@ def forward_diff(data, step, dim):
     assert dim <= 2
     r, n, m = np.shape(data)
     size = np.array((r, n, m))
-    position = xp.zeros(3)
-    temp1 = xp.zeros(size + 1)
-    temp2 = xp.zeros(size + 1)
+    position = xp.zeros(3,dtype='float32')
+    temp1 = xp.zeros(size + 1,dtype='float32')
+    temp2 = xp.zeros(size + 1,dtype='float32')
 
     size[dim] = size[dim] + 1
     position[dim] = position[dim] + 1
@@ -48,9 +48,9 @@ def back_diff(data, step, dim):
     assert dim <= 2
     r, n, m = np.shape(data)
     size = np.array((r, n, m))
-    position = np.zeros(3)
-    temp1 = xp.zeros(size + 1)
-    temp2 = xp.zeros(size + 1)
+    position = np.zeros(3,dtype='float32')
+    temp1 = xp.zeros(size + 1,dtype='float32')
+    temp2 = xp.zeros(size + 1,dtype='float32')
 
     temp1[position[0]:size[0], position[1]:size[1], position[2]:size[2]] = data
     temp2[position[0]:size[0], position[1]:size[1], position[2]:size[2]] = data
