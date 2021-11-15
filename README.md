@@ -12,7 +12,6 @@
 <!-- <h4 align="center">This repository contains the updating version of Sparse deconvolution.</h4> -->
 </p>  
 
-## Introduction
 
 Official **Python** implementation of the '**Sparse deconvolution**', and the `CPU (NumPy)` and `GPU (CuPy)` calculation backend will be automatically selected. 
 
@@ -23,8 +22,8 @@ It is a part of publication. For details, please refer to: "[Weisong Zhao et al.
 
 ## Instruction
 
-- The MATLAB version and detailed information can be found at https://github.com/WeisongZhao/Sparse-SIM
-- The GPU acceleration using CuPy requires a CUDA-compatible NVIDIA GPU. It could provide a ~30 times faster reconstruction speed for a `512 × 512 × 5` image stack.
+- NOTE: The MATLAB version and detailed information can be found at https://github.com/WeisongZhao/Sparse-SIM.
+- NOTE: The GPU acceleration feature using CuPy requires a CUDA-based NVIDIA GPU. It could provide a ~30 times faster reconstruction speed for a `512 × 512 × 5` image stack.
 - Clone/download, and run the `demo.py`
 
 ```python
