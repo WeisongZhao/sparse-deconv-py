@@ -15,7 +15,7 @@
 
 Official **Python** implementation of the '**Sparse deconvolution**', and the `CPU (NumPy)` and `GPU (CuPy)` calculation backend will be automatically selected. 
 
-We haven’t tested it throughout, and the development is work in progress, so expect rough edges. As a result, feedback, questions, bug reports, and patches are welcome and encouraged!
+We haven’t tested it thoroughly, and the development is work in progress, so expect rough edges. As a result, feedback, questions, bug reports, and patches are welcome and encouraged!
 
 It is a part of publication. For details, please refer to: "[Weisong Zhao et al. Sparse deconvolution improves the resolution of live-cell super-resolution fluorescence microscopy, Nature Biotechnology (2021)](https://doi.org/10.1038/s41587-021-01092-2)".
 
