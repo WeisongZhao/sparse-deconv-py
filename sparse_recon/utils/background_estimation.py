@@ -44,7 +44,7 @@ def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
             #print(k[1][2].shape)
             list_out = []
             for i in k:
-                lt = list(i)  # 把元组类型全部变成列表类型
+                lt = list(i)
                 list_out.append(lt)
 
             n = np.zeros((dlevel + 2, 2))
@@ -64,7 +64,7 @@ def background_estimation(imgs, th = 1, dlevel = 6, wavename = 'db6', iter = 3):
                 k = pywt.wavedec2(res, wavename,'symmetric',dlevel)
                 list_out = []
                 for i in k:
-                    lt = list(i)  # 把元组类型全部变成列表类型
+                    lt = list(i)
                     list_out.append(lt)
                 for kk in range(1, dlevel + 1):
                     list_out[kk][0] = zeros((int(n[kk, 1]),int(n[kk, 1])), dtype = 'float32')
