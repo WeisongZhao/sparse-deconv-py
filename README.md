@@ -1,4 +1,4 @@
-[![paper](https://img.shields.io/badge/paper-nat.%20biotech.-black.svg)](https://doi.org/10.1038/s41587-021-01092-2/)
+[![paper](https://img.shields.io/badge/paper-nat.%20biotech.-black.svg)](https://doi.org/10.1038/s41587-021-01092-2)
 [![Github commit](https://img.shields.io/github/last-commit/WeisongZhao/sparse-deconv-py)](https://github.com/WeisongZhao/sparse-deconv-py/)
 [![License](https://img.shields.io/github/license/WeisongZhao/sparse-deconv-py)](https://github.com/WeisongZhao/sparse-deconv-py/blob/master/LICENSE/)<br>
 [![Twitter](https://img.shields.io/twitter/follow/weisong_zhao?label=weisong)](https://twitter.com/weisong_zhao/status/1370308101690118146)
