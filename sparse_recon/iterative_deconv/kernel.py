@@ -12,8 +12,7 @@ def Gauss(sigma):
     dim = len(N)
     if dim > 1:
         N[1] = np.maximum(N[0], N[1])
-        N[1] = N[0]
-        sigma[0: 1] = np.flip(sigma[0: 1])
+        N[0] = N[1]
     if dim == 1:
         x = np.arange(-np.fix(N / 2), np.ceil(N / 2),dtype='float32')
         PSF = np.exp(-0.5 * (x * x) / (np.dot(sigma, sigma)))
@@ -26,23 +25,10 @@ def Gauss(sigma):
         x = np.arange(-np.fix((n / 2)), np.ceil((n / 2)),dtype='float32')
         y = np.arange(-np.fix((m / 2)), np.ceil((m / 2)),dtype='float32')
         X, Y = np.meshgrid(x, y)
-        if len(sigma) == 1:
-            PSF = np.exp(-X * X / (2 * np.dot(sigma, sigma)) - Y * Y / (2 * np.dot(sigma, sigma)))
-            PSFsum = PSF.sum()
-        elif len(sigma) == 2:
-            s1 = sigma[0]
-            s2 = sigma[1]
-            PSF = np.exp(-(X * X) / (2 * np.dot(s1, s1)) - (Y * Y) / (2 * np.dot(s2, s2)))
-            PSFsum = PSF.sum()
-        elif len(sigma) == 3:
-            s1 = sigma[0]
-            s2 = sigma[1]
-            s3 = sigma[2]
-
-            num = -((X * X) * (np.dot(s1, s1)) + ((Y * Y)) * (np.dot(s2, s2)) - 2 * (np.dot(s3, s3)) * ((X * Y)))
-            den = 2 * (np.dot(s1, s1) * np.dot(s2, s2) - s3 ** 4)
-            PSF = np.exp(num / den)
-            PSFsum = PSF.sum()
+        s1 = sigma[0]
+        s2 = sigma[1]
+        PSF = np.exp(-(X * X) / (2 * np.dot(s1, s1)) - (Y * Y) / (2 * np.dot(s2, s2)))
+        PSFsum = PSF.sum()
         PSF = PSF / PSFsum
         center = [m / 2 + 1, n / 2 + 1]
         return PSF
@@ -62,6 +48,7 @@ def Gauss(sigma):
         PSF = PSF / PSFsum
         center = [m / 2 + 1, n / 2 + 1, k / 2 + 1]
         return PSF
+
 '''def Generate_PSF(pixel,lamda,n,NA,z):
     sin2 = ((1 - (1 - math.pow( NA, 2 ))) / 2)
     u = 8 * math.pi * z * sin2 / lamda
