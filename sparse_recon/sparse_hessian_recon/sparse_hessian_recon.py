@@ -1,7 +1,7 @@
 
 import gc
-from operation import *
-from sparse_iteration import *
+from .operation import *
+from .sparse_iteration import *
 import numpy as np
 try:
     import cupy as cp
@@ -99,27 +99,40 @@ def sparse_hessian(f, iteration_num = 100, fidelity = 150, sparsity = 10, contiz
 
         Lxx,bxx = iter_xx(g, bxx, 1, mu)
         g_update = g_update + Lxx
+        del Lxx
+        gc.collect()
 
         Lyy,byy = iter_yy(g, byy, 1, mu)
         g_update = g_update + Lyy
+        del Lyy
+        gc.collect()
 
         Lzz,bzz = iter_zz(g, bzz, contiz**2, mu)
         g_update = g_update + Lzz
+        del Lzz
+        gc.collect()        
 
         Lxy,bxy = iter_xy(g, bxy, 2, mu)
         g_update = g_update + Lxy
+        del Lxy
+        gc.collect()        
 
         Lxz,bxz = iter_xz(g, bxz, 2 * contiz, mu)
         g_update = g_update + Lxz
+        del Lxz
+        gc.collect()        
 
         Lyz,byz = iter_yz(g, byz, 2 * contiz, mu)
         g_update = g_update + Lyz
+        del Lyz
+        gc.collect()
 
         Lsparse,bl1 = iter_sparse(g, bl1, sparsity, mu)
         g_update = g_update + Lsparse
+        del Lsparse
+        gc.collect()
 
-        print('iteration '+str(iter) + ' have done!')
-
+        print('%d iterations done\r' % iter)
 
     g[g < 0] = 0
 
