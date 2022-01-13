@@ -87,7 +87,7 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
     if not sigma:
         print("The PSF's sigma is not given, turning off the iterative deconv...")
         deconv_type = 0
-     img = np.array(img, dtype = 'float32')
+    img = np.array(img, dtype = 'float32')
     scaler = np.max(img)
     img = img / scaler
 
@@ -98,24 +98,24 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
         backgrounds = background_estimation(img / 2)
         img = img - backgrounds
     elif background == 3:
-        medVal = np.mean(im) / 2.5
+        medVal = np.mean(img) / 2.5
         img[img > medVal] = medVal
         backgrounds = background_estimation(img)
         img = img - backgrounds
     elif background== 4:
-        medVal = np.mean(im)/2
-        img[im> medVal] = medVal
+        medVal = np.mean(img)/2
+        img[img> medVal] = medVal
         backgrounds = background_estimation(img)
         img = img - backgrounds
     elif background == 5:
-        medVal = np.mean(im)
+        medVal = np.mean(img)
         img[img > medVal] = medVal
         backgrounds = background_estimation(img)
         img = img - backgrounds
 
 
     img = img / (img.max())
-    ims[ims < 0] = 0
+    img[img < 0] = 0
 
     if up_sample == 1:
         img = fourier_upsample(img)
