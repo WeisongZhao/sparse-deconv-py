@@ -62,9 +62,9 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
         the iteration of deconvolution {example:7}
     deconv_type : int, optional
        choose the different type deconvolution:
-       0: No deconvolution
-       1: LandWeber deconvolution
-       2: Richardson-Lucy deconvolution
+       0: No deconvolution       
+       1: Richardson-Lucy deconvolution
+       2: LandWeber deconvolution
 
     Returns
     -------
