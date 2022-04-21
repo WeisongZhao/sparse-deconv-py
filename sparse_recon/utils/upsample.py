@@ -10,6 +10,8 @@ if xp is not cp:
     warnings.warn("could not import cupy... falling back to numpy & cpu.")
 
 def spatial_upsample(SIMmovie,n=2):
+
+
     if xp is not cp:
         SIMmovie = SIMmovie
     else:
@@ -18,12 +20,11 @@ def spatial_upsample(SIMmovie,n=2):
     k = SIMmovie.ndim
     if k > 2:
         [sz,sx,sy] = SIMmovie.shape
-
-
-        y = xp.zeros((sz*n, sx*n,sy*n), dtype = 'float32')
-        y = xp.array(y)
-        y[0:sz*n:n, 0:sx*n:n, 0:sy*n:n] = SIMmovie
-        y = xp.array(y)
+        for frames in range(0, sz):
+            y = xp.zeros((sz, sx*n,sy*n), dtype = 'float32')
+            y = xp.array(y)
+            y[frames, 0:sx*n:n, 0:sy*n:n] = SIMmovie[frames,:,:]
+            y = xp.array(y)
         return y
     else:
         [sx, sy] = SIMmovie.shape
@@ -53,7 +54,7 @@ def fourier_upsample(imgstack, n = 2):
     if imgstack.ndim < 3:
         z = 1
     else:
-        z = imgstack[0]
+        z = imgstack.shape[0]
     for i in range(0,z):
         if imgstack.ndim < 3:
             img = imgstack
@@ -70,16 +71,24 @@ def fourier_upsample(imgstack, n = 2):
         padsize = [img.shape[0]/2,img.shape[1]/2]
         padsize = xp.array(padsize )
         k = xp.ceil(padsize )
-        img = xp.pad(img, [int(k[0]), int(k[1])], 'symmetric')
+        f=xp.floor(padsize )
+
+
+       # img = xp.pad(img, [int(k[0]), int(k[1])], 'symmetric')
+        img = xp.pad(img, ((int(k[0]), 0), (0,0)), 'symmetric')
+        img = xp.pad(img, ((0,0), (int(k[1]), 0)), 'symmetric')
+        img = xp.pad(img, ((0, int(f[0])), (0, 0)), 'symmetric')
+        img = xp.pad(img, ((0, 0), (0, int(f[1]))), 'symmetric')
+
         im_shape = n*(xp.array(img.shape))
         newsz = xp.floor(im_shape-(n - 1))
         imgl = fInterp_2D(img, newsz)
         if imgstack.ndim < 3:
             imgfl = imgl[int(idx[0][0]):int(n[0][0]) * int(imgsz[0])+int(idx[0][0]), int(idx[0][1]):int(idx[0][1]) + int(n[0][1]) *int(imgsz[1])]
         else:
-            imgfl = xp.zeros((z,int(n[0][0]) * int(imgsz[0]),int(n[0][0]) * int(imgsz[0])))
+            imgfl = xp.zeros((z,int(n[0][0]) * int(imgsz[0]),int(n[0][0]) * int(imgsz[1])))
             imgfl = xp.array(imgfl)
-            imgfl[i,:,:] = imgl[int(idx[0][0]):int(n[0][0])*int(imgsz[0])+int(idx[0][1])+1, int(idx[0][1]):int(idx[0][1])+int(n[0][1])*int(imgsz[1])+1]
+            imgfl[i,:,:] = imgl[int(idx[0][0]):int(n[0][0])*int(imgsz[0])+int(idx[0][0]), int(idx[0][1]):int(idx[0][1])+int(n[0][1])*int(imgsz[1])]
     return imgfl
 
 def fInterp_2D(img, newsz):
@@ -98,23 +107,29 @@ def fInterp_2D(img, newsz):
         else:
             incr = xp.floor(imgsz[iDim] / newsz[iDim]) + 1
     newsz[0][0] = int(newsz[0][0])
-    img_ip = xp.zeros((int(newsz[0][0]),int(newsz[0][1])))
+    a=newsz[0][0]
+    b=newsz[0][1]
+
+
+    img_ip = xp.zeros((int(a),int(b)))
     nyqst = xp.ceil((imgsz + 1) / 2)
-    B = float(newsz[0][0] / imgsz[0] * newsz[0][1] / imgsz[1])
+    B = float(a / imgsz[0] * b / imgsz[1])
     img = B * xp.fft.fft2(img)
     #img_ip=np.array(img_ip)
+
     img_ip[0: int(nyqst[0]), 0: int(nyqst[1])]= img[0: int(nyqst[0]), 0: int(nyqst[1])]#xl, yl
-    img_ip[newsz[0][0]-(int(imgsz[0])-int(nyqst[0])):newsz[0][0], 0:int(nyqst[1])] = img[int(nyqst[0]):int(imgsz[0]),0:int(nyqst[0])]#xh, yl
-    img_ip[0: int(nyqst[1]),newsz[0][0]- (int(imgsz[1]) - int(nyqst[1])):newsz[0][0]]= img[0: int(nyqst[0]),int( nyqst[1]): int(imgsz[1])]
-    img_ip[newsz[0][0]-(int(imgsz[0])- int(nyqst[0])):newsz[0][0], newsz[0][0]- (int(imgsz[1])-int(nyqst[1])):newsz[0][0]]=img[int(nyqst[0]):int(imgsz[0]), int(nyqst[1]):int(imgsz[1])]
+    img_ip[a-(int(imgsz[0])-int(nyqst[0])):a, 0:int(nyqst[1])] = img[int(nyqst[0]):int(imgsz[0]),0:int(nyqst[1])]#xh, yl
+    img_ip[0: int(nyqst[0]),a- (int(imgsz[1]) - int(nyqst[1])):a]= img[0: int(nyqst[0]),int( nyqst[1]): int(imgsz[1])]
+    img_ip[a-(int(imgsz[0])- int(nyqst[0])):a, a- (int(imgsz[1])-int(nyqst[1])):a]=img[int(nyqst[0]):int(imgsz[0]), int(nyqst[1]):int(imgsz[1])]
     rm = xp.remainder(imgsz, 2)
-    if int( rm[0]) == 0 & int(newsz[0][0] )!=int(imgsz[0]):
+    if int( rm[0]) == 0 & int(a )!=int(imgsz[0]):
         img_ip[int(nyqst[0]),:] = img_ip[int(nyqst[0]),:] / 2
-        img_ip[int(nyqst[0] ) + int(newsz[0][0]) - int(imgsz[0]),:] = img_ip[int(nyqst[0]),:]
-    if int(rm[1]) == 0 &int(newsz[0][1]) != int(imgsz[1]):
+        img_ip[int(nyqst[0] ) + int(a) - int(imgsz[0]),:] = img_ip[int(nyqst[0]),:]
+    if int(rm[1]) == 0 &int(b) != int(imgsz[1]):
         img_ip[int(nyqst[1]), :] = img_ip[int(nyqst[1]), :] / 2
-        img_ip[int(nyqst[1]) + int(newsz[0][1] )- int(imgsz[1]), :] = img_ip[int(nyqst[1]), :]
+        img_ip[:,int(nyqst[1])+int(b)-imgsz[1]] = img_ip[:,int(nyqst[1])]
     img_ip = xp.array(img_ip)
     img_ip =(xp.fft.ifft2(img_ip)). real
-    img_ip = img_ip[0: int(newsz[0][0]):int(incr[0]), 0:int(newsz[0][1]): int(incr[1])]
+    img_ip = img_ip[0: int(a):int(incr[0]), 0:int(b): int(incr[1])]
+
     return img_ip
