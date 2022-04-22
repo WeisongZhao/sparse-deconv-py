@@ -19,8 +19,7 @@ xp = np if cp is None else cp
 if xp is not cp:
     warnings.warn("could not import cupy... falling back to numpy & cpu.")
 def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, tcontinuity = 0.5,
-                          background = 1, deconv_iter = 7, deconv_type = 1,
-                          up_sample = 0,):
+                          background = 1, deconv_iter = 7, deconv_type = 1, up_sample = 0):
 
     """Sparse deconvolution.
    	----------
@@ -65,6 +64,11 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
        0: No deconvolution       
        1: Richardson-Lucy deconvolution
        2: LandWeber deconvolution
+    up_sample : int, optional
+       choose the different type upsampling (x2) operation:
+       0: No upsampling       
+       1: Fourier upsampling (should decrease the fidelity & increase sparsity)
+       2: Spatial upsampling
 
     Returns
     -------
