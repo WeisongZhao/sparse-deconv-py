@@ -67,8 +67,8 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
     up_sample : int, optional
        choose the different type upsampling (x2) operation:
        0: No upsampling       
-       1: Fourier upsampling (should decrease the fidelity & increase sparsity)
-       2: Spatial upsampling
+       1: Fourier upsampling
+       2: Spatial upsampling (should decrease the fidelity & increase sparsity)
 
     Returns
     -------
