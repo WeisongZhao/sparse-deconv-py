@@ -1,6 +1,6 @@
 import  warnings
 import numpy as np
-
+from matplotlib import pyplot as plt
 try:
     import cupy as cp
 except ImportError:
@@ -53,8 +53,14 @@ def fourier_upsample(imgstack, n = 2):
     n = n * xp.ones((1, 2))
     if imgstack.ndim < 3:
         z = 1
+        sz = [imgstack.shape[0], imgstack.shape[1]]
+        imgfl= xp.zeros(( int(n[0][0]) * int(sz[0]), int(n[0][0]) * int(sz[1])))
     else:
         z = imgstack.shape[0]
+        sz = [imgstack.shape[1], imgstack.shape[2]]
+        imgfl = xp.zeros((z, int(n[0][0]) * int(sz[0]), int(n[0][0]) * int(sz[1])))
+
+
     for i in range(0,z):
         if imgstack.ndim < 3:
             img = imgstack
@@ -84,12 +90,15 @@ def fourier_upsample(imgstack, n = 2):
         newsz = xp.floor(im_shape-(n - 1))
         imgl = fInterp_2D(img, newsz)
         if imgstack.ndim < 3:
+
             imgfl = imgl[int(idx[0][0]):int(n[0][0]) * int(imgsz[0])+int(idx[0][0]), int(idx[0][1]):int(idx[0][1]) + int(n[0][1]) *int(imgsz[1])]
         else:
-            imgfl = xp.zeros((z,int(n[0][0]) * int(imgsz[0]),int(n[0][0]) * int(imgsz[1])))
             imgfl = xp.array(imgfl)
+
             imgfl[i,:,:] = imgl[int(idx[0][0]):int(n[0][0])*int(imgsz[0])+int(idx[0][0]), int(idx[0][1]):int(idx[0][1])+int(n[0][1])*int(imgsz[1])]
+
     return imgfl
+
 
 def fInterp_2D(img, newsz):
     imgsz = img.shape
