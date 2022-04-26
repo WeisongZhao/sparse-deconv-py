@@ -1,6 +1,6 @@
 import  warnings
 import numpy as np
-
+from matplotlib import pyplot as plt
 try:
     import cupy as cp
 except ImportError:
@@ -81,10 +81,9 @@ def fourier_upsample(imgstack, n = 2):
 
 
        # img = xp.pad(img, [int(k[0]), int(k[1])], 'symmetric')
-        img = xp.pad(img, ((int(k[0]), 0), (0,0)), 'symmetric')
-        img = xp.pad(img, ((0,0), (int(k[1]), 0)), 'symmetric')
-        img = xp.pad(img, ((0, int(f[0])), (0, 0)), 'symmetric')
-        img = xp.pad(img, ((0, 0), (0, int(f[1]))), 'symmetric')
+        img = xp.pad(img, ((int(k[0]), 0), (int(k[1]), 0)), 'symmetric')
+
+        img = xp.pad(img, ((0, int(f[0])), (0, int(f[1]))), 'symmetric')
 
         im_shape = n*(xp.array(img.shape))
         newsz = xp.floor(im_shape-(n - 1))
@@ -98,7 +97,6 @@ def fourier_upsample(imgstack, n = 2):
             imgfl[i,:,:] = imgl[int(idx[0][0]):int(n[0][0])*int(imgsz[0])+int(idx[0][0]), int(idx[0][1]):int(idx[0][1])+int(n[0][1])*int(imgsz[1])]
 
     return imgfl
-
 
 def fInterp_2D(img, newsz):
     imgsz = img.shape
@@ -118,14 +116,10 @@ def fInterp_2D(img, newsz):
     newsz[0][0] = int(newsz[0][0])
     a=newsz[0][0]
     b=newsz[0][1]
-
-
-    img_ip = xp.zeros((int(a),int(b)))
     nyqst = xp.ceil((imgsz + 1) / 2)
     B = float(a / imgsz[0] * b / imgsz[1])
     img = B * xp.fft.fft2(img)
-    #img_ip=np.array(img_ip)
-
+    img_ip = xp.zeros((int(a), int(b)),dtype = 'complex')
     img_ip[0: int(nyqst[0]), 0: int(nyqst[1])]= img[0: int(nyqst[0]), 0: int(nyqst[1])]#xl, yl
     img_ip[a-(int(imgsz[0])-int(nyqst[0])):a, 0:int(nyqst[1])] = img[int(nyqst[0]):int(imgsz[0]),0:int(nyqst[1])]#xh, yl
     img_ip[0: int(nyqst[0]),a- (int(imgsz[1]) - int(nyqst[1])):a]= img[0: int(nyqst[0]),int( nyqst[1]): int(imgsz[1])]
@@ -135,10 +129,12 @@ def fInterp_2D(img, newsz):
         img_ip[int(nyqst[0]),:] = img_ip[int(nyqst[0]),:] / 2
         img_ip[int(nyqst[0] ) + int(a) - int(imgsz[0]),:] = img_ip[int(nyqst[0]),:]
     if int(rm[1]) == 0 &int(b) != int(imgsz[1]):
-        img_ip[int(nyqst[1]), :] = img_ip[int(nyqst[1]), :] / 2
+        img_ip[ :,int(nyqst[1])] = img_ip[ :,int(nyqst[1])] / 2
         img_ip[:,int(nyqst[1])+int(b)-imgsz[1]] = img_ip[:,int(nyqst[1])]
     img_ip = xp.array(img_ip)
     img_ip =(xp.fft.ifft2(img_ip)). real
     img_ip = img_ip[0: int(a):int(incr[0]), 0:int(b): int(incr[1])]
-
+    # img = cp.float32( img_ip.get())
+    # plt.imshow(img , cmap='gray')
+    # plt.show()
     return img_ip
