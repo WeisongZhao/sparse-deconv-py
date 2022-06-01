@@ -68,7 +68,7 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
        choose the different type upsampling (x2) operation:
        0: No upsampling       
        1: Fourier upsampling
-       2: Spatial upsampling (should decrease the fidelity & increase sparsity)
+       2: Spatial upsampling (should decrease the fidelity & sparsity)
 
     Returns
     -------
@@ -85,7 +85,7 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
     ----------
       [1] Weisong Zhao et al. Sparse deconvolution improves
       the resolution of live-cell super-resolution 
-      fluorescence microscopy, Nature Biotechnology (2021),
+      fluorescence microscopy, Nature Biotechnology (2022),
       https://doi.org/10.1038/s41587-021-01092-2
     """
     if not sigma:
