@@ -21,7 +21,7 @@ def iterative_deconv(data,kernel,iteration,rule):
     if data.ndim > 2:
         data_de = xp.zeros((data.shape[0], data.shape[1],data.shape[2]), dtype = 'float32')
         for i in range(0, data.shape[0]):
-            data_de[i, :, ] = (deblur_core(data[i, :,:], kernel, iteration, rule)).real
+            data_de[i, :, :] = (deblur_core(data[i, :,:], kernel, iteration, rule)).real
     else:
         data_de = (deblur_core(data, kernel, iteration, rule)).real
 

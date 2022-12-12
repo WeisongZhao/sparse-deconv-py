@@ -30,11 +30,11 @@ def rm_1(Biter, x, y):
     return Biter_new
 
 
-def background_estimation_stack(imgs, th = 1, dlevel = 7, wavename = 'db6', iter = 3):
+def background_estimation(imgs, th = 1, dlevel = 7, wavename = 'db6', iter = 3):
     ''' Background estimation
         function Background = background_estimation(imgs,th,dlevel,wavename,iter)
         imgs: ndarray
-            Input image (can be N dimensional).
+            Input image (can be T × X × Y).
         th : int, optional
             if iteration {default:1}
         dlevel : int, optional

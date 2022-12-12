@@ -35,7 +35,7 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
     Parameters
     ----------
     img : ndarray
-       Input image (can be N dimensional).
+       Input image (can be T × X × Y).
     sigma : 1/2/3 element(s) list
        The point spread function size in pixel.
        [x, y, z] dimension
