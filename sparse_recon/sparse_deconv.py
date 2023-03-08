@@ -24,7 +24,7 @@ def sparse_deconv(img, sigma, sparse_iter = 100, fidelity = 150, sparsity = 10, 
     """Sparse deconvolution.
    	----------
    	It is an universal post-processing framework for 
-   	fluorescent (or intensity-based) image restoration, 
+   	fluorescence (or intensity-based) image restoration, 
    	including xy (2D), xy-t (2D along t axis), 
    	and xy-z (3D) images. 
    	It is based on the natural priori 
