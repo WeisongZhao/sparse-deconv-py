@@ -89,7 +89,7 @@ def deblur_core(data, kernel, iteration, rule):
 
             else:
 
-                alpha = sum(sum(vk_update * vk))/(sum(sum(vk_update * vk_update)) + math.e)
+                alpha = sum(sum(vk_update * vk))/(sum(sum(vk_update * vk_update)) + 1e-10)
                 alpha = xp.maximum(xp.minimum(alpha, 1), 1e-6, dtype = 'float32')
                # start = time.clock()
                 yk = xk + alpha * (xk - xk_update)
